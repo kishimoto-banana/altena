@@ -26,7 +26,7 @@ def read_file(filename):
 setup(
     name='altena',
     version='0.0.1',
-    description='カテゴリ変数からの特徴抽出',
+    description='Feature extraction for categorical variables',
     long_description=read_file('README.md'),
     author='Masashi Kishimoto',
     author_email='drehbleistift@gmail.com',
