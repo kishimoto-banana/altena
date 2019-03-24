@@ -31,6 +31,7 @@ class EntityEmbedding:
                  ],
                  activations=['relu'],
                  optimizer='rmsprop',
+                 loss='binary_crossentropy',
                  dropout_rate=0.0,
                  regularizers=None):
         """
@@ -39,6 +40,7 @@ class EntityEmbedding:
         :param hidden_units: list
         :param activations: list
         :param optimizer: str
+        :param loss: str
         :param dropout_rate: float
         :param regularizers: list
         """
@@ -63,7 +65,7 @@ class EntityEmbedding:
         self.encoder = encoder
         self.model = self.__construct_model(
             encoder, embedding_dims, hidden_units, activations, optimizer,
-            dropout_rate, regularizers)
+            loss, dropout_rate, regularizers)
         self.weights = None
 
     def __construct_model(self,
@@ -72,6 +74,7 @@ class EntityEmbedding:
                           hidden_units,
                           activations,
                           optimizer,
+                          loss,
                           dropout_rate,
                           regularizers=None):
         """
@@ -81,6 +84,7 @@ class EntityEmbedding:
         :param hidden_units: list
         :param activations: list
         :param optimizer: str
+        :param loss: str
         :param dropout_rate: float
         :param regularizers: list
         :return: keras.model.Model
@@ -127,10 +131,7 @@ class EntityEmbedding:
         prediction = Activation('sigmoid')(output)
 
         model = Model(inputs=inputs, outputs=prediction)
-        model.compile(
-            optimizer=optimizer,
-            loss='binary_crossentropy',
-            metrics=['accuracy'])
+        model.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
 
         return model
 

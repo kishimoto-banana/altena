@@ -25,6 +25,8 @@ def main():
     activations = ['relu', 'relu']
     # 最適化法
     optimizer = 'rmsprop'
+    # 損失関数
+    loss = 'binary_crossentropy'
     # ドロップアウト率（Embeddingレイヤのみ）
     dropout_rate = 0.2
 
@@ -35,6 +37,7 @@ def main():
         hidden_units=hidden_units,
         activations=activations,
         optimizer=optimizer,
+        loss=loss,
         dropout_rate=dropout_rate)
 
     # 学習
