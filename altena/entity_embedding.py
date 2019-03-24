@@ -2,6 +2,7 @@ import keras
 from keras.models import Model
 from keras.layers import Embedding, Input, Activation, Reshape, Dense, Concatenate, Dropout
 import pickle
+import numpy as np
 
 allowed_regularizers = ['l1', 'l2']
 
@@ -66,6 +67,7 @@ class EntityEmbedding:
         self.model = self.__construct_model(
             encoder, embedding_dims, hidden_units, activations, optimizer,
             loss, dropout_rate, regularizers)
+        self.embedding_dims = embedding_dims
         self.weights = None
 
     def __construct_model(self,
@@ -250,6 +252,33 @@ class EntityEmbedding:
         """
 
         return self.model.get_weights()
+
+    def embedding(self, X):
+        """
+        学習したモデルを使用してエンコードされた入力データの分散表現を得る
+        :param X: numpy.array
+        :return: numpy.array
+        """
+
+        n_samples = X.shape[0]
+        n_categorical_features = X.shape[1]
+        n_dims = sum(self.embedding_dims)
+        encoded_columns = self.encoder.columns
+
+        X_embedding = np.zeros((n_samples, n_dims))
+
+        for sample_idx in range(n_samples):
+            latter_idx = 0
+            for categorical_feature_idx in range(n_categorical_features):
+                target_column = encoded_columns[categorical_feature_idx]
+                target_key = X[sample_idx, categorical_feature_idx]
+                emdedding_vector = self.infer_vector(target_column, target_key)
+                former_idx = latter_idx
+                latter_idx += self.embedding_dims[categorical_feature_idx]
+                X_embedding[sample_idx, former_idx:
+                            latter_idx] = emdedding_vector
+
+        return X_embedding
 
 
 def save_model(filepath, model):
