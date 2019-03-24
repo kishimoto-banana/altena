@@ -24,13 +24,13 @@ def read_file(filename):
 
 
 setup(
-    name='velvet',
+    name='altena',
     version='0.0.1',
     description='カテゴリ変数からの特徴抽出',
     long_description=read_file('README.md'),
     author='Masashi Kishimoto',
     author_email='drehbleistift@gmail.com',
-    url='https://github.com/kishimoto-banana/velvet',
+    url='https://github.com/kishimoto-banana/altena',
     classifiers=[
         'Development Status :: 4 - Beta', 'Programming Language :: Python',
         'Programming Language :: Python :: 3.6'

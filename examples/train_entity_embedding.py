@@ -1,6 +1,6 @@
 import pandas as pd
-from velvet.encoder import OrdinalEncoder
-from velvet.entity_embedding import EntityEmbedding, save_model
+from altena.encoder import OrdinalEncoder
+from altena.entity_embedding import EntityEmbedding, save_model
 
 
 def main():
